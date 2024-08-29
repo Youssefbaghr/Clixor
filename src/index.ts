@@ -19,7 +19,7 @@ displayBanner();
 program
     .version(version)
     .description(
-        'Clixor - A modern CLI for initializing and managing development projects'
+        'Clixor - A modern CLI for initializing and managing development projects.'
     );
 
 program
