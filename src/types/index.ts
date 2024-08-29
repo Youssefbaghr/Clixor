@@ -6,7 +6,7 @@ export interface ProjectConfig {
     features: string[];
 }
 
-export interface ClizerConfig extends ProjectConfig {
+export interface ClixorConfig extends ProjectConfig {
     customTemplates?: Record<string, string>;
     [key: string]: any;
 }

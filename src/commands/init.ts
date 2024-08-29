@@ -3,7 +3,7 @@ import ora from 'ora';
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
-import { ClizerConfig, ProjectConfig } from '../types';
+import { ClixorConfig, ProjectConfig } from '../types';
 import { cloneRepository } from '../utils/git';
 import { installDependencies } from '../utils/package-managers';
 import { getProjectTemplates } from '../templates/project-templates';
@@ -11,8 +11,8 @@ import { createProjectStructure } from '../utils/file-system';
 import { loadConfig, saveConfig } from '../utils/config';
 import { logger } from '../utils/logger';
 
-export async function initCommand(options: Partial<ClizerConfig>) {
-    const spinner = ora('Initializing Clizer project...').start();
+export async function initCommand(options: Partial<ClixorConfig>) {
+    const spinner = ora('Initializing Clixor project...').start();
     try {
         const config = await getFullConfig(options);
 
@@ -70,8 +70,8 @@ export async function initCommand(options: Partial<ClizerConfig>) {
 }
 
 async function getFullConfig(
-    options: Partial<ClizerConfig>
-): Promise<ClizerConfig> {
+    options: Partial<ClixorConfig>
+): Promise<ClixorConfig> {
     const savedConfig = await loadConfig();
     const templates = await getProjectTemplates();
 
@@ -80,7 +80,7 @@ async function getFullConfig(
             type: 'input',
             name: 'name',
             message: 'What is the name of your project?',
-            default: options.name || savedConfig.name || 'my-clizer-project',
+            default: options.name || savedConfig.name || 'my-Clixor-project',
             when: !options.name,
         },
         {

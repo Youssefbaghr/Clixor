@@ -1,10 +1,10 @@
 {
-    "name": "clizer",
+    "name": "clixor",
     "version": "1.0.1",
     "description": "A modern CLI for initializing and managing development projects",
     "main": "dist/index.js",
     "bin": {
-        "clizer": "./dist/index.js"
+        "Clixor": "./dist/index.js"
     },
     "scripts": {
         "start": "ts-node src/index.ts",
@@ -14,7 +14,8 @@
     },
     "dependencies": {
         "chalk": "^4.1.2",
-        "clizer": "file:",
+        "clixor": "file:",
+        "Clixor": "file:",
         "commander": "^8.3.0",
         "figlet": "^1.5.2",
         "fs-extra": "^10.0.0",

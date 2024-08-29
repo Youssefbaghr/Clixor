@@ -4,7 +4,7 @@ import figlet from 'figlet';
 export function displayBanner() {
     console.log(
         chalk.cyan(
-            figlet.textSync('Clizer', {
+            figlet.textSync('Clixor', {
                 font: 'Standard',
                 horizontalLayout: 'full',
             })

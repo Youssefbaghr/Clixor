@@ -1,6 +1,6 @@
 import { loadConfig, saveConfig } from '../utils/config';
 import { logger } from '../utils/logger';
-import { ClizerConfig } from '../types';
+import { ClixorConfig } from '../types';
 
 export async function templateCommand(options: {
     list?: boolean;
@@ -8,7 +8,7 @@ export async function templateCommand(options: {
     remove?: string;
 }) {
     try {
-        const config = (await loadConfig()) as ClizerConfig;
+        const config = (await loadConfig()) as ClixorConfig;
         config.customTemplates = config.customTemplates || {};
 
         if (options.list) {

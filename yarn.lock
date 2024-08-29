@@ -997,12 +997,13 @@ cliui@^7.0.2:
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
 
-"clizer@file:":
+"clixor@file:":
   version "1.0.1"
   resolved "file:"
   dependencies:
     chalk "^4.1.2"
-    clizer "file:"
+    clixor "file:"
+    Clixor "file:"
     commander "^8.3.0"
     figlet "^1.5.2"
     fs-extra "^10.0.0"

@@ -19,7 +19,7 @@ displayBanner();
 program
     .version(version)
     .description(
-        'Clizer - A modern CLI for initializing and managing development projects'
+        'Clixor - A modern CLI for initializing and managing development projects'
     );
 
 program
@@ -31,7 +31,7 @@ program
 
 program
     .command('config')
-    .description('Manage Clizer configuration')
+    .description('Manage Clixor configuration')
     .option('-l, --list', 'List current configuration')
     .option('-s, --set <key=value>', 'Set a configuration value')
     .option('-r, --reset', 'Reset configuration to defaults')
@@ -54,7 +54,7 @@ async function interactiveSetup() {
             type: 'input',
             name: 'name',
             message: 'What is the name of your project?',
-            default: savedConfig.name || 'my-clizer-project',
+            default: savedConfig.name || 'my-Clixor-project',
         },
         {
             type: 'list',

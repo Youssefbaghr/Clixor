@@ -1,6 +1,6 @@
 import { loadConfig, saveConfig, resetConfig } from '../utils/config';
 import { logger } from '../utils/logger';
-import { ClizerConfig } from '../types';
+import { ClixorConfig } from '../types';
 
 export async function configCommand(options: {
     list?: boolean;
@@ -10,7 +10,7 @@ export async function configCommand(options: {
     try {
         if (options.list) {
             const config = await loadConfig();
-            logger.info('Current Clizer configuration:');
+            logger.info('Current Clixor configuration:');
             console.log(JSON.stringify(config, null, 2));
         } else if (options.set) {
             const [key, value] = options.set.split('=');

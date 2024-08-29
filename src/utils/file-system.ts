@@ -15,7 +15,7 @@ export async function createProjectStructure(
     // Add README.md
     await fs.writeFile(
         path.join(projectPath, 'README.md'),
-        `# ${config.name}\n\nThis project was generated with Clizer.`
+        `# ${config.name}\n\nThis project was generated with Clixor.`
     );
 
     // Add additional files based on selected features

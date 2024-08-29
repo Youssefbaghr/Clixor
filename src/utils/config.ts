@@ -1,20 +1,20 @@
 import fs from 'fs-extra';
 import path from 'path';
 import os from 'os';
-import { ClizerConfig } from '../types';
+import { ClixorConfig } from '../types';
 
-const CONFIG_FILE = path.join(os.homedir(), '.clizer-config.json');
+const CONFIG_FILE = path.join(os.homedir(), '.Clixor-config.json');
 
-export async function loadConfig(): Promise<ClizerConfig> {
+export async function loadConfig(): Promise<ClixorConfig> {
     try {
         const config = await fs.readJson(CONFIG_FILE);
-        return config as ClizerConfig;
+        return config as ClixorConfig;
     } catch (error) {
-        return {} as ClizerConfig;
+        return {} as ClixorConfig;
     }
 }
 
-export async function saveConfig(config: ClizerConfig): Promise<void> {
+export async function saveConfig(config: ClixorConfig): Promise<void> {
     await fs.writeJson(CONFIG_FILE, config, { spaces: 2 });
 }
 
