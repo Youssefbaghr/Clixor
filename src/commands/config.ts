@@ -18,7 +18,7 @@ export async function configCommand(options: {
                 throw new Error('Invalid set option. Use format: key=value');
             }
             const config = await loadConfig();
-            (config as any)[key] = value; // Use type assertion here
+            (config as any)[key] = value;
             await saveConfig(config);
             logger.success(`Configuration updated: ${key} = ${value}`);
         } else if (options.reset) {

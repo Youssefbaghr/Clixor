@@ -1,6 +1,8 @@
 import inquirer from 'inquirer';
 import ora from 'ora';
 import chalk from 'chalk';
+import fs from 'fs-extra';
+import path from 'path';
 import { ClizerConfig, ProjectConfig } from '../types';
 import { cloneRepository } from '../utils/git';
 import { installDependencies } from '../utils/package-managers';
@@ -14,8 +16,41 @@ export async function initCommand(options: Partial<ClizerConfig>) {
     try {
         const config = await getFullConfig(options);
 
+        while (fs.existsSync(path.join(process.cwd(), config.name))) {
+            spinner.stop();
+            const { action } = await inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'action',
+                    message: `A directory named "${config.name}" already exists. What would you like to do?`,
+                    choices: [
+                        { name: 'Choose a different name', value: 'rename' },
+                        { name: 'Cancel', value: 'cancel' },
+                    ],
+                },
+            ]);
+
+            if (action === 'cancel') {
+                logger.info('Project initialization cancelled.');
+                return;
+            }
+
+            const { newName } = await inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'newName',
+                    message: 'Enter a new project name:',
+                    validate: (input) =>
+                        input.trim() !== '' || 'Project name cannot be empty',
+                },
+            ]);
+
+            config.name = newName.trim();
+            spinner.start();
+        }
+
         spinner.text = 'Cloning repository...';
-        await cloneRepository(config);
+        await cloneRepository(config.templateUri, config.name);
 
         spinner.text = 'Creating project structure...';
         await createProjectStructure(config);
@@ -52,11 +87,9 @@ async function getFullConfig(
             type: 'list',
             name: 'template',
             message: 'Choose a project template:',
-            choices: Object.keys(templates),
+            choices: templates.map((t: any) => t.name),
             default:
-                options.template ||
-                savedConfig.template ||
-                Object.keys(templates)[0],
+                options.template || savedConfig.template || templates[0].name,
             when: !options.template,
         },
         {
@@ -92,10 +125,21 @@ async function getFullConfig(
     ];
 
     const answers = await inquirer.prompt(questions);
+    const selectedTemplate = templates.find(
+        (t) => t.name === (options.template || answers.template)
+    );
+
+    if (!selectedTemplate) {
+        throw new Error(
+            `Template "${options.template || answers.template}" not found`
+        );
+    }
+
     return {
         ...savedConfig,
         ...options,
         ...answers,
+        templateUri: selectedTemplate ? selectedTemplate.uri : '',
         customTemplates: savedConfig.customTemplates || {},
-    } as ClizerConfig;
+    } as ProjectConfig;
 }

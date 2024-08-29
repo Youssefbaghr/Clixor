@@ -60,8 +60,8 @@ async function interactiveSetup() {
             type: 'list',
             name: 'template',
             message: 'Choose a project template:',
-            choices: Object.keys(templates),
-            default: savedConfig.template || Object.keys(templates)[0],
+            choices: templates.map((t: any) => t.name),
+            default: savedConfig.template || templates[0].name,
         },
         {
             type: 'input',
@@ -92,12 +92,19 @@ async function interactiveSetup() {
     ];
 
     const answers = await inquirer.prompt(questions);
+    const selectedTemplate = templates.find((t) => t.name === answers.template);
+
+    if (!selectedTemplate) {
+        throw new Error(`Template "${answers.template}" not found`);
+    }
+
     const config: ProjectConfig = {
         ...answers,
+        templateUri: selectedTemplate.uri,
         customTemplates: savedConfig.customTemplates || {},
     };
 
-    await initCommand({ ...config });
+    await initCommand(config);
 }
 
 // Handle the case when no subcommand is provided

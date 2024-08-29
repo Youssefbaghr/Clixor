@@ -1,7 +1,16 @@
 export function getProjectTemplates() {
-    return {
-        'node-ts': 'https://github.com/example/node-ts-template.git',
-        'react-ts': 'https://github.com/example/react-ts-template.git',
-        'express-api': 'https://github.com/example/express-api-template.git',
-    };
+    return [
+        {
+            name: 'node-ts',
+            uri: 'https://github.com/example/node-ts-template.git',
+        },
+        {
+            name: 'react-ts',
+            uri: 'https://github.com/Azamov-Otabek/Starter-TypeScript-React.git',
+        },
+        {
+            name: 'express-api',
+            uri: 'https://github.com/example/express-api-template.git',
+        },
+    ];
 }

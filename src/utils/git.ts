@@ -1,9 +1,11 @@
 import { exec } from 'child_process';
-import { ProjectConfig } from '../types';
 
-export function cloneRepository(config: ProjectConfig): Promise<void> {
+export function cloneRepository(
+    templateUri: string,
+    projectName: string
+): Promise<void> {
     return new Promise((resolve, reject) => {
-        const command = `git clone -b ${config.branch} ${config.template} ${config.name}`;
+        const command = `git clone ${templateUri} ${projectName}`;
         exec(command, (error) => {
             if (error) {
                 reject(error);
