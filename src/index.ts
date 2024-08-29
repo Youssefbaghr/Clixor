@@ -7,10 +7,10 @@ import { initCommand } from './commands/init';
 import { configCommand } from './commands/config';
 import { templateCommand } from './commands/template';
 import { displayBanner } from './utils/ui';
-import { version } from '../package.json';
 import { ProjectConfig } from './types';
 import { getProjectTemplates } from './templates/project-templates';
 import { loadConfig } from './utils/config';
+import { version } from './config';
 
 const program = new Command();
 
