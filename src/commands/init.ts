@@ -1,15 +1,16 @@
 import inquirer from 'inquirer';
 import ora from 'ora';
-import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
-import { ClixorConfig, ProjectConfig } from '../types';
+import { ClixorConfig } from '../types';
 import { cloneRepository } from '../utils/git';
 import { installDependencies } from '../utils/package-managers';
 import { getProjectTemplates } from '../templates/project-templates';
 import { createProjectStructure } from '../utils/file-system';
 import { loadConfig, saveConfig } from '../utils/config';
 import { logger } from '../utils/logger';
+import { nodeTemplate } from '../config/constants';
+import chalk from 'chalk';
 
 export async function initCommand(options: Partial<ClixorConfig>) {
     const spinner = ora('Initializing Clixor project...').start();
@@ -49,22 +50,64 @@ export async function initCommand(options: Partial<ClixorConfig>) {
             spinner.start();
         }
 
-        spinner.text = 'Cloning repository...';
-        await cloneRepository(config.templateUri, config.name);
+        spinner.text = chalk.cyan('Cloning repositories...');
+        if (
+            config.template === 'React' ||
+            (config.template === 'Next-js' &&
+                config.nextjsType === 'with-express-api')
+        ) {
+            await Promise.all([
+                cloneRepository(
+                    config.templateUri,
+                    path.join(config.name, config.frontendName || 'frontend')
+                ),
+                cloneRepository(
+                    nodeTemplate,
+                    path.join(config.name, config.backendName || 'backend')
+                ),
+            ]);
+        } else {
+            await cloneRepository(config.templateUri, config.name);
+        }
 
-        spinner.text = 'Creating project structure...';
+        spinner.text = chalk.cyan('Creating project structure...');
         await createProjectStructure(config);
 
-        spinner.text = 'Installing dependencies...';
-        await installDependencies(config);
+        spinner.text = chalk.cyan('Installing dependencies...');
+        if (
+            config.template === 'React' ||
+            (config.template === 'Next-js' &&
+                config.nextjsType === 'with-express-api')
+        ) {
+            await Promise.all([
+                installDependencies({
+                    ...config,
+                    name: path.join(
+                        config.name,
+                        config.frontendName || 'frontend'
+                    ),
+                }),
+                installDependencies({
+                    ...config,
+                    name: path.join(
+                        config.name,
+                        config.backendName || 'backend'
+                    ),
+                }),
+            ]);
+        } else {
+            await installDependencies(config);
+        }
 
-        spinner.succeed('Project initialized successfully!');
+        spinner.succeed(chalk.green('Project initialized successfully!'));
         logger.success(`Your project "${config.name}" is ready!`);
-        logger.info(`Next steps:\n1. cd ${config.name}\n2. Start coding!`);
+        logger.info(
+            chalk.blue(`Next steps:\n1. cd ${config.name}\n2. Start coding!`)
+        );
 
         await saveConfig(config);
     } catch (error) {
-        spinner.fail('Failed to initialize project');
+        spinner.fail(chalk.red('Failed to initialize project'));
         logger.error('Project initialization failed', error);
     }
 }
@@ -75,71 +118,16 @@ async function getFullConfig(
     const savedConfig = await loadConfig();
     const templates = await getProjectTemplates();
 
-    const questions = [
-        {
-            type: 'input',
-            name: 'name',
-            message: 'What is the name of your project?',
-            default: options.name || savedConfig.name || 'my-Clixor-project',
-            when: !options.name,
-        },
-        {
-            type: 'list',
-            name: 'template',
-            message: 'Choose a project template:',
-            choices: templates.map((t: any) => t.name),
-            default:
-                options.template || savedConfig.template || templates[0].name,
-            when: !options.template,
-        },
-        {
-            type: 'input',
-            name: 'branch',
-            message: 'Which branch would you like to use?',
-            default: options.branch || savedConfig.branch || 'main',
-            when: !options.branch,
-        },
-        {
-            type: 'list',
-            name: 'packageManager',
-            message: 'Which package manager would you like to use?',
-            choices: ['npm', 'yarn', 'bun'],
-            default:
-                options.packageManager || savedConfig.packageManager || 'npm',
-            when: !options.packageManager,
-        },
-        {
-            type: 'checkbox',
-            name: 'features',
-            message: 'Select additional features:',
-            choices: [
-                { name: 'ESLint', value: 'eslint' },
-                { name: 'Prettier', value: 'prettier' },
-                { name: 'Jest', value: 'jest' },
-                { name: 'GitHub Actions', value: 'github-actions' },
-                { name: 'Docker', value: 'docker' },
-            ],
-            default: options.features || savedConfig.features || [],
-            when: !options.features,
-        },
-    ];
-
-    const answers = await inquirer.prompt(questions);
-    const selectedTemplate = templates.find(
-        (t) => t.name === (options.template || answers.template)
-    );
+    const selectedTemplate = templates.find((t) => t.name === options.template);
 
     if (!selectedTemplate) {
-        throw new Error(
-            `Template "${options.template || answers.template}" not found`
-        );
+        throw new Error(`Template "${options.template}" not found`);
     }
 
     return {
         ...savedConfig,
         ...options,
-        ...answers,
-        templateUri: selectedTemplate ? selectedTemplate.uri : '',
+        templateUri: selectedTemplate.uri,
         customTemplates: savedConfig.customTemplates || {},
-    } as ProjectConfig;
+    } as ClixorConfig;
 }

@@ -12,7 +12,9 @@ export function displayBanner() {
     );
     console.log(
         chalk.cyan(
-            'A modern CLI for initializing and managing development projects\n'
+            'A modern CLI for initializing and managing development projects'
         )
     );
+    console.log(chalk.yellow('Version: 1.0.1'));
+    console.log(chalk.green("\nLet's create your project!\n"));
 }

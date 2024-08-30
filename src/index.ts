@@ -7,9 +7,6 @@ import { initCommand } from './commands/init';
 import { configCommand } from './commands/config';
 import { templateCommand } from './commands/template';
 import { displayBanner } from './utils/ui';
-import { ProjectConfig } from './types';
-import { getProjectTemplates } from './templates/project-templates';
-import { loadConfig } from './utils/config';
 import { version } from './config';
 
 const program = new Command();
@@ -25,91 +22,98 @@ program
 program
     .command('init')
     .description('Initialize a new project')
-    .option('-t, --template <name>', 'Specify a template to use')
-    .option('-n, --name <name>', 'Specify the project name')
-    .action(initCommand);
+    .action(async () => {
+        try {
+            const options = await promptInitOptions();
+            await initCommand(options);
+        } catch (error) {
+            console.error(chalk.red('Error initializing project:'), error);
+        }
+    });
 
 program
     .command('config')
     .description('Manage Clixor configuration')
-    .option('-l, --list', 'List current configuration')
-    .option('-s, --set <key=value>', 'Set a configuration value')
-    .option('-r, --reset', 'Reset configuration to defaults')
     .action(configCommand);
 
 program
     .command('template')
     .description('Manage project templates')
-    .option('-l, --list', 'List available templates')
-    .option('-a, --add <name> <url>', 'Add a new template')
-    .option('-r, --remove <name>', 'Remove a template')
     .action(templateCommand);
 
-async function interactiveSetup() {
-    const savedConfig = await loadConfig();
-    const templates = await getProjectTemplates();
+program.parse(process.argv);
 
+if (!process.argv.slice(2).length) {
+    program.outputHelp();
+}
+
+async function promptInitOptions() {
     const questions = [
         {
             type: 'input',
             name: 'name',
-            message: 'What is the name of your project?',
-            default: savedConfig.name || 'my-Clixor-project',
+            message: chalk.blue('What is the name of your project?'),
+            default: 'my-clixor-project',
         },
         {
             type: 'list',
             name: 'template',
-            message: 'Choose a project template:',
-            choices: templates.map((t: any) => t.name),
-            default: savedConfig.template || templates[0].name,
-        },
-        {
-            type: 'input',
-            name: 'branch',
-            message: 'Which branch would you like to use?',
-            default: savedConfig.branch || 'main',
-        },
-        {
-            type: 'list',
-            name: 'packageManager',
-            message: 'Which package manager would you like to use?',
-            choices: ['npm', 'yarn', 'bun'],
-            default: savedConfig.packageManager || 'npm',
-        },
-        {
-            type: 'checkbox',
-            name: 'features',
-            message: 'Select additional features:',
-            choices: [
-                { name: 'ESLint', value: 'eslint' },
-                { name: 'Prettier', value: 'prettier' },
-                { name: 'Jest', value: 'jest' },
-                { name: 'GitHub Actions', value: 'github-actions' },
-                { name: 'Docker', value: 'docker' },
-            ],
-            default: savedConfig.features || [],
+            message: chalk.blue('Choose a project template:'),
+            choices: ['React', 'Next-js'],
         },
     ];
 
     const answers = await inquirer.prompt(questions);
-    const selectedTemplate = templates.find((t) => t.name === answers.template);
 
-    if (!selectedTemplate) {
-        throw new Error(`Template "${answers.template}" not found`);
+    if (answers.template === 'Next-js') {
+        const nextjsType = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'nextjsType',
+                message: chalk.blue('Choose Next.js setup:'),
+                choices: [
+                    { name: 'With Express API', value: 'with-express-api' },
+                    {
+                        name: 'With Server Actions',
+                        value: 'with-server-actions',
+                    },
+                ],
+            },
+        ]);
+        answers.nextjsType = nextjsType.nextjsType;
     }
 
-    const config: ProjectConfig = {
-        ...answers,
-        templateUri: selectedTemplate.uri,
-        customTemplates: savedConfig.customTemplates || {},
-    };
+    if (
+        answers.template === 'React' ||
+        (answers.template === 'Next-js' &&
+            answers.nextjsType === 'with-express-api')
+    ) {
+        const folderNames = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'frontendName',
+                message: chalk.blue('Enter the name for the frontend folder:'),
+                default: answers.template === 'React' ? 'client' : 'frontend',
+            },
+            {
+                type: 'input',
+                name: 'backendName',
+                message: chalk.blue('Enter the name for the backend folder:'),
+                default: 'backend',
+            },
+        ]);
+        Object.assign(answers, folderNames);
+    }
 
-    await initCommand(config);
-}
+    const packageManager = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'packageManager',
+            message: chalk.blue('Which package manager would you like to use?'),
+            choices: ['npm', 'yarn', 'bun'],
+        },
+    ]);
+    answers.packageManager = packageManager.packageManager;
 
-// Handle the case when no subcommand is provided
-if (process.argv.length === 2) {
-    interactiveSetup();
-} else {
-    program.parse(process.argv);
+    return answers;
 }

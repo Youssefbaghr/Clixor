@@ -997,7 +997,7 @@ cliui@^7.0.2:
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
 
-"clixor@file:":
+"Clixor@file:":
   version "1.0.1"
   resolved "file:"
   dependencies:
