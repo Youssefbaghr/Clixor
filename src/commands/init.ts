@@ -10,6 +10,7 @@ import process from 'process';
 import { handleInitError } from '../utils/error-handling';
 import { setupProject } from '../utils/project-setup';
 import { handleExistingDirectory } from '../utils/directory-helpers';
+import { validateProject } from '../utils/project-validation';
 
 export async function initCommand(options: Partial<ClixorConfig>) {
   const spinner = ora('Initializing Clixor project...').start();
@@ -25,7 +26,13 @@ export async function initCommand(options: Partial<ClixorConfig>) {
     await handleExistingDirectory(config, spinner);
     await setupProject(config, spinner);
 
-    spinner.succeed(chalk.green('Project initialized successfully!'));
+    const isValid = await validateProject(config);
+    if (!isValid) {
+      spinner.fail(chalk.red('Project validation failed. Please check the logs for details.'));
+      process.exit(1);
+    }
+
+    spinner.succeed(chalk.green('Project initialized and validated successfully!'));
     logger.success(`Your project "${config.name}" is ready!`);
     logger.info(chalk.blue(`Next steps:\n1. cd ${config.name}\n2. Start coding!`));
 
