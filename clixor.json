@@ -1,0 +1,22 @@
+{
+    "version": "1.0.1",
+    "defaultTemplate": "React",
+    "features": ["eslint", "prettier", "jest", "github-actions", "docker"],
+    "hooks": {
+        "post-init": "npm run setup"
+    },
+    "templates": {
+        "React": {
+            "url": "https://github.com/Azamov-Otabek/Starter-TypeScript-React.git",
+            "description": "A React starter template with TypeScript"
+        },
+        "Next.js with Express API": {
+            "url": "https://github.com/Skolaczk/next-starter.git",
+            "description": "A Next.js starter with Express API"
+        },
+        "Next.js with Server Actions": {
+            "url": "https://github.com/tuffstuff9/nextjs-serveraction-drizzle-starter.git",
+            "description": "A Next.js starter with Server Actions"
+        }
+    }
+}

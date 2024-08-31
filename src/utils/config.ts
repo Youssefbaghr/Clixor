@@ -3,21 +3,41 @@ import path from 'path';
 import os from 'os';
 import { ClixorConfig } from '../types';
 
-const CONFIG_FILE = path.join(os.homedir(), '.Clixor-config.json');
+export function getConfigPath(): string {
+    return path.join(os.homedir(), '.Clixor-config.json');
+}
 
 export async function loadConfig(): Promise<ClixorConfig> {
     try {
-        const config = await fs.readJson(CONFIG_FILE);
-        return config as ClixorConfig;
+        const configPath = getConfigPath();
+
+        if (await fs.pathExists(configPath)) {
+            const config = await fs.readJson(configPath);
+
+            return config as ClixorConfig;
+        }
+        console.log('No existing config found');
+        return {} as ClixorConfig;
     } catch (error) {
+        console.error('Error loading config:', error);
         return {} as ClixorConfig;
     }
 }
 
 export async function saveConfig(config: ClixorConfig): Promise<void> {
-    await fs.writeJson(CONFIG_FILE, config, { spaces: 2 });
+    try {
+        const configPath = getConfigPath();
+        await fs.writeJson(configPath, config, { spaces: 2 });
+    } catch (error) {
+        console.error('Error saving config:', error);
+    }
 }
 
 export async function resetConfig(): Promise<void> {
-    await fs.remove(CONFIG_FILE);
+    try {
+        const configPath = getConfigPath();
+        await fs.remove(configPath);
+    } catch (error) {
+        console.error('Error resetting config:', error);
+    }
 }

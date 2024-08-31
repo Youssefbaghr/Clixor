@@ -8,9 +8,11 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-Streamline your project setup with Clixor - the modern CLI for effortless development initialization.
+Streamline your project setup with Clixor - the modern CLI for effortless development
+initialization.
 
-[Installation](#installation) • [Usage](#usage) • [Features](#features) • [Contributing](#contributing) • [Support](#support)
+[Installation](#installation) • [Usage](#usage) • [Features](#features) •
+[Contributing](#contributing) • [Support](#support)
 
 </div>
 
@@ -18,12 +20,12 @@ Streamline your project setup with Clixor - the modern CLI for effortless develo
 
 ## 🌟 Features
 
--   🏗️ **Project Initialization**: Quickly bootstrap projects using predefined or custom templates
--   🎨 **Customizable Templates**: Easily manage and use your own project templates
--   🧭 **Interactive Setup**: User-friendly prompts guide you through project configuration
--   📦 **Multiple Package Managers**: Seamless support for npm, Yarn, and Bun
--   🛠️ **Optional Tooling**: Integrate popular tools like ESLint, Prettier, Jest, and Docker with ease
--   ⚙️ **Flexible Configuration**: Persist and manage your preferences for future use
+- 🏗️ **Project Initialization**: Quickly bootstrap projects using predefined or custom templates
+- 🎨 **Customizable Templates**: Easily manage and use your own project templates
+- 🧭 **Interactive Setup**: User-friendly prompts guide you through project configuration
+- 📦 **Multiple Package Managers**: Seamless support for npm, Yarn, and Bun
+- 🛠️ **Optional Tooling**: Integrate popular tools like ESLint, Prettier, Jest, and Docker with ease
+- ⚙️ **Flexible Configuration**: Persist and manage your preferences for future use
 
 ## 🚀 Quick Start
 
@@ -37,33 +39,33 @@ This command initializes a new project named "my-awesome-project" using Clixor's
 
 ### Prerequisites
 
--   Node.js (v14 or later)
--   Git
+- Node.js (v14 or later)
+- Git
 
 ### Steps
 
 1. **Clone the repository:**
 
-    ```bash
-    git clone https://github.com/Youssefbaghr/Clixor.git
-    cd Clixor
-    ```
+   ```bash
+   git clone https://github.com/Youssefbaghr/Clixor.git
+   cd Clixor
+   ```
 
 2. **Install dependencies:**
 
-    ```bash
-    npm install
-    # or
-    yarn install
-    # or
-    bun install
-    ```
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   bun install
+   ```
 
 3. **Link the CLI globally:**
 
-    ```bash
-    npm link
-    ```
+   ```bash
+   npm link
+   ```
 
 ## 🖥️ Usage
 
@@ -95,18 +97,19 @@ clixor template --remove react-ts
 
 ## 🛠️ Configuration
 
-Clixor uses a JSON configuration file stored at `~/.Clixor-config.json`. You can edit this file directly or use the `clixor config` command.
+Clixor uses a JSON configuration file stored at `~/.Clixor-config.json`. You can edit this file
+directly or use the `clixor config` command.
 
 Example configuration:
 
 ```json
 {
-    "defaultTemplate": "react",
-    "packageManager": "npm",
-    "features": ["eslint", "prettier"],
-    "customTemplates": {
-        "react-ts": "https://github.com/example/react-ts-template.git"
-    }
+  "defaultTemplate": "react",
+  "packageManager": "npm",
+  "features": ["eslint", "prettier"],
+  "customTemplates": {
+    "react-ts": "https://github.com/example/react-ts-template.git"
+  }
 }
 ```
 
@@ -116,19 +119,37 @@ Example configuration:
 
 1. Create a Git repository with your project structure
 2. Add a `clixor.json` file to specify template options:
-    ```json
-    {
-        "variables": ["projectName", "author"],
-        "scripts": {
-            "post-init": "npm run setup"
-        }
-    }
-    ```
+   ```json
+   {
+     "variables": ["projectName", "author"],
+     "scripts": {
+       "post-init": "npm run setup"
+     }
+   }
+   ```
 3. Add the template using `clixor template --add`
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on how to get started.
+We love our contributors! ❤️ Check out the [CONTRIBUTORS.md](CONTRIBUTORS.md) file to see the
+amazing people who have helped make Clixor awesome.
+
+Want to join this list of amazing people? We'd love your help! Here's how you can contribute:
+
+1. 🍴 Fork the repository
+2. 🌿 Create a new branch
+3. ✨ Make your changes
+4. 🔧 Test your changes
+5. 📤 Submit a pull request
+
+For more detailed information, please read our [Contributing Guide](Docs/CONTRIBUTING.md).
+
+Whether it's submitting a bug report, proposing a new feature, or improving documentation - every
+contribution counts!
+
+## 📜 Changelog
+
+See [CHANGELOG.md](Docs/CHANGELOG.md) for a history of changes to this project.
 
 ## 📄 License
 
@@ -136,9 +157,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgements
 
--   [Commander.js](https://github.com/tj/commander.js/) - CLI framework
--   [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/) - Interactive prompts
--   [Chalk](https://github.com/chalk/chalk) - Terminal styling
+- [Commander.js](https://github.com/tj/commander.js/) - CLI framework
+- [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/) - Interactive prompts
+- [Chalk](https://github.com/chalk/chalk) - Terminal styling
 
 ---
 
