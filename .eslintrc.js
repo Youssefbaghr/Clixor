@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
@@ -32,7 +33,6 @@ module.exports = {
     // Function rules
 
     'no-loop-func': 'error',
-    'prefer-arrow-callback': 'error',
 
     // Variable rules
     'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
@@ -40,7 +40,6 @@ module.exports = {
     // Error handling
     'no-throw-literal': 'error',
 
-    'max-len': ['error', { code: 100, ignoreUrls: true }],
     'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
     'no-trailing-spaces': 'error',
   },
