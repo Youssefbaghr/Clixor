@@ -1,3 +1,5 @@
+import { templateUrls } from '../config/templates';
+
 export interface ProjectConfig {
     name: string;
     template: string;
@@ -13,3 +15,5 @@ export interface ClixorConfig extends ProjectConfig {
     nextjsType?: 'with-express-api' | 'with-server-actions';
     [key: string]: any;
 }
+
+export type TemplateType = keyof typeof templateUrls;

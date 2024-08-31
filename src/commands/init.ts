@@ -11,6 +11,8 @@ import { logger } from '../utils/logger';
 import { nodeTemplate } from '../config/constants';
 import chalk from 'chalk';
 import ora from 'ora';
+import { templateUrls } from '../config/templates';
+import { TemplateType } from '../types';
 
 export async function initCommand(options: Partial<ClixorConfig>) {
     const spinner = ora('Initializing Clixor project...').start();
@@ -55,8 +57,7 @@ export async function initCommand(options: Partial<ClixorConfig>) {
 
         if (
             config.template === 'React' ||
-            (config.template === 'Next-js' &&
-                config.nextjsType === 'with-express-api')
+            config.template === 'Next.js with Express API'
         ) {
             await Promise.all([
                 cloneRepository(
@@ -78,8 +79,7 @@ export async function initCommand(options: Partial<ClixorConfig>) {
         spinner.text = chalk.cyan('Installing dependencies...');
         if (
             config.template === 'React' ||
-            (config.template === 'Next-js' &&
-                config.nextjsType === 'with-express-api')
+            config.template === 'Next.js with Express API'
         ) {
             await Promise.all([
                 installDependencies({
@@ -118,18 +118,19 @@ async function getFullConfig(
     options: Partial<ClixorConfig>
 ): Promise<ClixorConfig> {
     const savedConfig = await loadConfig();
-    const templates = await getProjectTemplates();
+    const templates = getProjectTemplates();
 
-    const selectedTemplate = templates.find((t) => t.name === options.template);
-
-    if (!selectedTemplate) {
+    if (options.template && !templates.includes(options.template)) {
         throw new Error(`Template "${options.template}" not found`);
     }
 
     return {
         ...savedConfig,
         ...options,
-        templateUri: selectedTemplate.uri,
+        templateUri:
+            options.template && options.template in templateUrls
+                ? templateUrls[options.template as TemplateType]
+                : undefined,
         customTemplates: savedConfig.customTemplates || {},
     } as ClixorConfig;
 }

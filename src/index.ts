@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { initCommand } from './commands/init';
@@ -8,55 +7,23 @@ import { configCommand } from './commands/config';
 import { templateCommand } from './commands/template';
 import {
     displayBanner,
-    createSpinner,
     displaySuccessMessage,
     displayErrorMessage,
 } from './utils/ui';
 import { version } from './config';
+import { ClixorConfig } from './types';
 import boxen from 'boxen';
 
-const program = new Command();
-
-// Function to run the CLI
 async function runCLI() {
     try {
         displayBanner();
 
-        program
-            .version(version)
-            .description(
-                'Clixor - A modern CLI for initializing and managing development projects.'
-            );
+        const args = process.argv.slice(2);
 
-        program
-            .command('init')
-            .description('Initialize a new project')
-            .action(async () => {
-                try {
-                    const options = await promptInitOptions();
-                    await initCommand(options);
-                } catch (error) {
-                    console.error(
-                        chalk.red('Error initializing project:'),
-                        error
-                    );
-                }
-            });
-
-        program
-            .command('config')
-            .description('Manage Clixor configuration')
-            .action(configCommand);
-
-        program
-            .command('template')
-            .description('Manage project templates')
-            .action(templateCommand);
-
-        await program.parseAsync(process.argv);
-
-        if (!process.argv.slice(2).length) {
+        if (args.length === 0) {
             await showMainMenu();
+        } else {
+            await handleCommand(args);
         }
     } catch (error) {
         console.error('An error occurred:', error);
@@ -64,33 +31,53 @@ async function runCLI() {
     }
 }
 
-// Check if the script is being run directly
-if (require.main === module) {
-    runCLI().catch(console.error);
-} else {
-    module.exports = { runCLI };
+async function showMainMenu() {
+    while (true) {
+        const { action } = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'action',
+                message: chalk.blue('What would you like to do?'),
+                choices: [
+                    { name: 'Initialize a new project', value: 'init' },
+                    { name: 'Manage configuration', value: 'config' },
+                    { name: 'Manage templates', value: 'template' },
+                    { name: 'View documentation', value: 'docs' },
+                    { name: 'Exit', value: 'exit' },
+                ],
+            },
+        ]);
+
+        switch (action) {
+            case 'init':
+                const options = await promptInitOptions();
+                await initCommand(options);
+                break;
+            case 'config':
+                await configCommand({});
+                break;
+            case 'template':
+                await templateCommand({});
+                break;
+            case 'docs':
+                displayDocumentation();
+                break;
+            case 'exit':
+                displaySuccessMessage('Thanks for using Clixor!');
+                process.exit(0);
+        }
+
+        if (action === 'exit') {
+            break;
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
 }
 
-async function showMainMenu() {
-    console.clear();
-    displayBanner();
-
-    const { action } = await inquirer.prompt([
-        {
-            type: 'list',
-            name: 'action',
-            message: chalk.blue('What would you like to do?'),
-            choices: [
-                { name: 'Initialize a new project', value: 'init' },
-                { name: 'Manage configuration', value: 'config' },
-                { name: 'Manage templates', value: 'template' },
-                { name: 'View documentation', value: 'docs' },
-                { name: 'Exit', value: 'exit' },
-            ],
-        },
-    ]);
-
-    switch (action) {
+async function handleCommand(args: string[]) {
+    const command = args[0];
+    switch (command) {
         case 'init':
             const options = await promptInitOptions();
             await initCommand(options);
@@ -101,21 +88,21 @@ async function showMainMenu() {
         case 'template':
             await templateCommand({});
             break;
-        case 'docs':
-            displayDocumentation();
-            break;
-        case 'exit':
-            displaySuccessMessage('Thanks for using Clixor!');
-            process.exit(0);
-    }
-
-    if (action !== 'exit') {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        await showMainMenu();
+        default:
+            console.log(chalk.red(`Unknown command: ${command}`));
+            displayHelp();
     }
 }
 
-async function promptInitOptions() {
+function displayHelp() {
+    console.log(chalk.cyan('\nAvailable commands:'));
+    console.log('  init     Initialize a new project');
+    console.log('  config   Manage Clixor configuration');
+    console.log('  template Manage project templates');
+    console.log('\nRun without commands to use the interactive menu.');
+}
+
+async function promptInitOptions(): Promise<Partial<ClixorConfig>> {
     const questions = [
         {
             type: 'input',
@@ -129,24 +116,11 @@ async function promptInitOptions() {
             type: 'list',
             name: 'template',
             message: chalk.blue('Choose a project template:'),
-            choices: ['React', 'Next.js', 'Custom'],
+            choices: ['React', 'Next.js'],
         },
     ];
 
     const answers = await inquirer.prompt(questions);
-
-    if (answers.template === 'Custom') {
-        const customTemplate = await inquirer.prompt([
-            {
-                type: 'input',
-                name: 'customTemplateUrl',
-                message: chalk.blue('Enter the URL of your custom template:'),
-                validate: (input: string) =>
-                    input.trim() !== '' || 'Template URL cannot be empty',
-            },
-        ]);
-        answers.customTemplateUrl = customTemplate.customTemplateUrl;
-    }
 
     if (answers.template === 'Next.js') {
         const nextjsType = await inquirer.prompt([
@@ -155,28 +129,30 @@ async function promptInitOptions() {
                 name: 'nextjsType',
                 message: chalk.blue('Choose Next.js setup:'),
                 choices: [
-                    { name: 'With Express API', value: 'with-express-api' },
+                    {
+                        name: 'With Express API',
+                        value: 'Next.js with Express API',
+                    },
                     {
                         name: 'With Server Actions',
-                        value: 'with-server-actions',
+                        value: 'Next.js with Server Actions',
                     },
                 ],
             },
         ]);
-        answers.nextjsType = nextjsType.nextjsType;
+        answers.template = nextjsType.nextjsType;
     }
 
     if (
-        answers.template === 'React' ||
-        (answers.template === 'Next.js' &&
-            answers.nextjsType === 'with-express-api')
+        answers.template === 'Next.js with Express API' ||
+        answers.template === 'React'
     ) {
         const folderNames = await inquirer.prompt([
             {
                 type: 'input',
                 name: 'frontendName',
                 message: chalk.blue('Enter the name for the frontend folder:'),
-                default: answers.template === 'React' ? 'client' : 'frontend',
+                default: 'frontend',
             },
             {
                 type: 'input',
@@ -235,4 +211,10 @@ function displayDocumentation() {
             { padding: 1, borderColor: 'cyan', borderStyle: 'round' }
         )
     );
+}
+
+if (require.main === module) {
+    runCLI().catch(console.error);
+} else {
+    module.exports = { runCLI };
 }

@@ -1,13 +1,5 @@
-export function getProjectTemplates() {
-    return [
-        {
-            name: 'React',
-            uri: 'https://github.com/Azamov-Otabek/Starter-TypeScript-React.git',
-        },
+import { templateUrls } from '../config/templates';
 
-        {
-            name: 'Next-js',
-            uri: 'https://github.com/example/express-api-template.git',
-        },
-    ];
+export function getProjectTemplates() {
+    return Object.keys(templateUrls);
 }
