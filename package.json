@@ -47,7 +47,7 @@
     "bcrypt": "^5.1.0",
     "boxen": "^5.1.2",
     "chalk": "^4.1.2",
-    "chalk-animation": "^1.6.0",
+    "chalk-animation": "^2.0.3",
     "clixor": "file:",
     "commander": "^8.3.0",
     "figlet": "^1.5.2",
