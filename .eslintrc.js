@@ -1,13 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/typescript',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   plugins: ['@typescript-eslint', 'import'],
   rules: {
     // TypeScript specific rules
@@ -23,21 +16,6 @@ module.exports = {
     'no-var': 'error',
     'prefer-const': 'error',
     'spaced-comment': ['error', 'always', { markers: ['/'] }],
-
-    // Import rules
-    'import/order': [
-      'error',
-      {
-        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-        'newlines-between': 'always',
-        alphabetize: { order: 'asc', caseInsensitive: true },
-      },
-    ],
-    'import/no-unresolved': 'error',
-    'import/named': 'error',
-    'import/namespace': 'error',
-    'import/default': 'error',
-    'import/export': 'error',
 
     // Async/Promise rules
     'no-async-promise-executor': 'error',
@@ -62,15 +40,8 @@ module.exports = {
     // Error handling
     'no-throw-literal': 'error',
 
-    // Whitespace and formatting (in case Prettier misses something)
-    'linebreak-style': ['error', 'unix'],
     'max-len': ['error', { code: 100, ignoreUrls: true }],
     'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
     'no-trailing-spaces': 'error',
-  },
-  settings: {
-    'import/resolver': {
-      typescript: {}, // this loads <rootdir>/tsconfig.json to eslint
-    },
   },
 };

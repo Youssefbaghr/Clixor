@@ -17,7 +17,10 @@
     "test:e2e": "jest tests/e2e",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "website:dev": "cd website && yarn dev",
+    "website:build": "cd website && yarn build",
+    "website:start": "cd website && yarn start"
   },
   "keywords": [
     "cli",
