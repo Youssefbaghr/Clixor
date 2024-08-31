@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "A modern CLI for initializing and managing development projects",
   "main": "dist/index.js",
+  "license": "MIT",
   "bin": {
     "Clixor": "./dist/index.js"
   },
