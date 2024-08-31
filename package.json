@@ -16,8 +16,7 @@
     "test:integration": "jest tests/integration",
     "test:e2e": "jest tests/e2e",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
-  
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
