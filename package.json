@@ -1,11 +1,11 @@
 {
   "name": "clixor",
-  "version": "1.0.1",
-  "description": "A modern CLI for initializing and managing development projects",
+  "version": "1.0.2",
+  "description": "A modern CLI for initializing and managing development projects with customizable templates and features",
   "main": "dist/index.js",
   "license": "MIT",
   "bin": {
-    "Clixor": "./dist/index.js"
+    "clixor": "./dist/index.js"
   },
   "scripts": {
     "start": "node dist/index.js",
@@ -16,7 +16,32 @@
     "test:integration": "jest tests/integration",
     "test:e2e": "jest tests/e2e",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cli",
+    "project-generator",
+    "boilerplate",
+    "template",
+    "react",
+    "next.js",
+    "typescript",
+    "development-tool",
+    "project-management",
+    "scaffolding"
+  ],
+  "author": "Youssef Baghrous",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Youssefbaghr/Clixor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Youssefbaghr/Clixor/issues"
+  },
+  "homepage": "https://github.com/Youssefbaghr/Clixor#readme",
+  "engines": {
+    "node": ">=14.0.0"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
