@@ -10,8 +10,7 @@ export function displayBanner() {
         horizontalLayout: 'full',
     });
 
-    const tagline =
-        'A modern CLI for initializing and managing development projects';
+    const tagline = 'A modern CLI for initializing and managing development projects';
     const versionInfo = `v${version}`;
 
     const banner = boxen(
@@ -30,27 +29,14 @@ export function displayBanner() {
     );
 
     const tips = [
-        chalk.green('💡 Tip:') +
-            ' Use ' +
-            chalk.cyan('clixor init') +
-            ' to start a new project',
-        chalk.green('💡 Tip:') +
-            ' Run ' +
-            chalk.cyan('clixor --help') +
-            ' for a list of commands',
-        chalk.green('💡 Tip:') +
-            ' Visit ' +
-            chalk.underline.blue('https://github.com/Youssefbaghr/Clixor') +
-            ' for documentation',
+        chalk.green('💡 Tip:') + ' Use ' + chalk.cyan('clixor init') + ' to start a new project',
+        chalk.green('💡 Tip:') + ' Run ' + chalk.cyan('clixor --help') + ' for a list of commands',
+        chalk.green('💡 Tip:') + ' Visit ' + chalk.underline.blue('https://clixor.dev') + ' for documentation',
     ];
 
     console.log(banner);
     console.log(tips.join('\n'));
-    console.log(
-        '\n' +
-            chalk.dim('=' + '='.repeat(process.stdout.columns - 2) + '=') +
-            '\n'
-    );
+    console.log('\n' + chalk.dim('=' + '='.repeat(process.stdout.columns - 2) + '=') + '\n');
 }
 
 export function createSpinner(text: string) {
@@ -90,14 +76,12 @@ export function displayDocumentation() {
         boxen(
             chalk.cyan.bold('📚 Clixor Documentation\n\n') +
                 chalk.white('Commands:\n') +
-                chalk.yellow('init') +
-                ' - Initialize a new project\n' +
-                chalk.yellow('config') +
-                ' - Manage Clixor configuration\n' +
-                chalk.yellow('template') +
-                ' - Manage project templates\n\n' +
+                chalk.yellow('init') + ' - Initialize a new project\n' +
+                chalk.yellow('config') + ' - Manage Clixor configuration\n' +
+                chalk.yellow('template') + ' - Manage project templates\n' +
+                chalk.yellow('plugin') + ' - Manage Clixor plugins\n\n' +
                 chalk.white('For more information, visit: ') +
-                chalk.cyan('https://github.com/Youssefbaghr/Clixor'),
+                chalk.cyan('https://clixor.dev'),
             {
                 padding: 1,
                 margin: 1,
@@ -106,4 +90,16 @@ export function displayDocumentation() {
             }
         )
     );
+}
+
+export function displayProgressBar(current: number, total: number, label: string) {
+    const percentage = Math.round((current / total) * 100);
+    const filledWidth = Math.round((percentage / 100) * 20);
+    const emptyWidth = 20 - filledWidth;
+
+    const progressBar = 
+        chalk.cyan('█'.repeat(filledWidth)) + 
+        chalk.gray('░'.repeat(emptyWidth));
+
+    console.log(`${label}: [${progressBar}] ${percentage}%`);
 }
