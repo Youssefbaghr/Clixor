@@ -44,18 +44,21 @@ This command initializes a new project named "my-awesome-project" using Clixor's
 
 ### Steps
 
-
 To install Clixor globally, run:
-   ```bash
-  npm install -g clixor
-   ```
 
-Now you can use Clixor from anywhere in your terminal:
-   ```bash
-   clixor init my-new-project
+```bash
+npm install -g clixor
 ```
 
-By following these steps, users will be able to install and use Clixor globally via npm, which will pull the package from your GitHub repository. The CI/CD pipeline will ensure that new versions are automatically published to npm when you push changes or create new releases on GitHub.
+Now you can use Clixor from anywhere in your terminal:
+
+```bash
+clixor init my-new-project
+```
+
+By following these steps, users will be able to install and use Clixor globally via npm, which will
+pull the package from your GitHub repository. The CI/CD pipeline will ensure that new versions are
+automatically published to npm when you push changes or create new releases on GitHub.
 
 1. **Clone the repository:**
 
@@ -79,6 +82,61 @@ By following these steps, users will be able to install and use Clixor globally 
    ```bash
    npm link
    ```
+
+## 🌐 Website
+
+Clixor now features a sleek website built with Next.js, offering a comprehensive overview of the
+project.
+
+### 🚀 Running the Website Locally
+
+1. **Navigate to the website directory:**
+
+   ```bash
+   cd website
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   yarn install
+   ```
+
+3. **Run the development server:**
+   ```bash
+   yarn dev
+   ```
+
+### 🛠 Convenient Scripts
+
+For your convenience, you can use these Yarn scripts from the root directory:
+
+- **Development mode:**
+
+  ```bash
+  yarn website:dev
+  ```
+
+- **Production build:**
+
+  ```bash
+  yarn website:build
+  ```
+
+- **Start production server:**
+  ```bash
+  yarn website:start
+  ```
+
+### 🌟 Website Features
+
+- 📚 **Documentation:** In-depth guides on Clixor usage and features
+- 🖼 **Template Showcase:** Explore available project templates
+- 🔧 **Interactive Examples:** Try Clixor commands directly in your browser
+- 📰 **Blog:** Stay updated with the latest Clixor news and tips
+- 🤝 **Community:** Connect with other Clixor users and contributors
+
+Visit our website to discover how Clixor can streamline your development workflow!
 
 ## 🖥️ Usage
 
