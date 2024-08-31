@@ -129,6 +129,49 @@ Example configuration:
    ```
 3. Add the template using `clixor template --add`
 
+### Creating Plugins
+
+Clixor supports a plugin system that allows you to extend its functionality. Here's how to create a
+plugin:
+
+1. Create a new TypeScript file in the `src/plugins` directory.
+2. Import the `PluginInterface` from `src/plugins/types/index.ts`.
+3. Create a class that implements the `PluginInterface`.
+4. Implement the required methods:
+   - `name`: A string identifier for your plugin.
+   - `version`: The version of your plugin.
+   - `initialize`: A method called when the plugin is registered.
+   - `execute`: The main functionality of your plugin.
+
+Example plugin:
+
+```typescript
+import { PluginInterface } from '../types';
+export class MyCustomPlugin implements PluginInterface {
+name = 'MyCustomPlugin';
+version = '1.0.0';
+initialize(): void {
+console.log('MyCustomPlugin initialized');
+}
+async execute(context: any): Promise<string> {
+return MyCustomPlugin executed with context: ${JSON.stringify(context)};
+}
+}
+```
+
+To use your plugin, register it in the `src/utils/plugins.ts` file:
+
+```typescript
+import { MyCustomPlugin } from '../plugins/MyCustomPlugin';
+// In the loadPlugins function
+const myCustomPlugin = new MyCustomPlugin();
+myCustomPlugin.initialize();
+// Add logic to use the plugin as needed
+```
+
+Plugins allow you to add new commands, modify existing functionality, or integrate with external
+services to enhance Clixor's capabilities.
+
 ## 🤝 Contributing
 
 We love our contributors! ❤️ Check out the [CONTRIBUTORS.md](CONTRIBUTORS.md) file to see the
