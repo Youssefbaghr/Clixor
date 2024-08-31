@@ -161,14 +161,14 @@ Example plugin:
 ```typescript
 import { PluginInterface } from '../types';
 export class MyCustomPlugin implements PluginInterface {
-name = 'MyCustomPlugin';
-version = '1.0.0';
-initialize(): void {
-console.log('MyCustomPlugin initialized');
-}
-async execute(context: any): Promise<string> {
-return MyCustomPlugin executed with context: ${JSON.stringify(context)};
-}
+   name = 'MyCustomPlugin';
+   version = '1.0.0';
+   initialize(): void {
+      console.log('MyCustomPlugin initialized');
+   }
+      async execute(context: any): Promise<string> {
+         return MyCustomPlugin executed with context: ${JSON.stringify(context)};
+      }
 }
 ```
 
