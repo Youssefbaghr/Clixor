@@ -4,6 +4,7 @@ import '@/styles/globals.css';
 import { ThemeProvider } from '@/providers/themeProvider';
 import { Navbar } from '@/layouts/(public)/Navbar';
 import { Footer } from '@/layouts/(public)/Footer';
+import GitHubStarsBanner from '@/layouts/(public)/GitHubStarsBanner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
+          <GitHubStarsBanner />
           <div className="flex min-h-screen flex-col">
             <Navbar />
             <main className="flex-1">{children}</main>
