@@ -17,7 +17,7 @@
     "test:e2e": "jest tests/e2e",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
-    "prepare": "husky install"
+  
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
