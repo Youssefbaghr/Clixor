@@ -138,6 +138,18 @@ For your convenience, you can use these Yarn scripts from the root directory:
 
 Visit our website to discover how Clixor can streamline your development workflow!
 
+## VS Code Extension
+
+Clixor comes with a Visual Studio Code extension to enhance your development experience. To use the
+extension:
+
+1. Open VS Code
+2. Go to the Extensions view (Ctrl+Shift+X)
+3. Search for "Clixor"
+4. Install the Clixor extension
+5. Use the command palette (Ctrl+Shift+P) and search for "Clixor: Initialize New Project" to create
+   a new Clixor project directly from VS Code.
+
 ## 🖥️ Usage
 
 ### Initialize a New Project

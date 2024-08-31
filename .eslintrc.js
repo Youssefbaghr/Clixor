@@ -14,7 +14,7 @@ module.exports = {
     'no-debugger': 'warn',
     'no-duplicate-imports': 'error',
     'no-var': 'error',
-    'prefer-const': 'error',
+
     'spaced-comment': ['error', 'always', { markers: ['/'] }],
 
     // Async/Promise rules
@@ -30,7 +30,7 @@ module.exports = {
     'array-callback-return': 'error',
 
     // Function rules
-    'func-style': ['error', 'expression'],
+
     'no-loop-func': 'error',
     'prefer-arrow-callback': 'error',
 

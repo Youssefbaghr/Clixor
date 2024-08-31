@@ -20,7 +20,8 @@
     "prepublishOnly": "npm run build",
     "website:dev": "cd website && yarn dev",
     "website:build": "cd website && yarn build",
-    "website:start": "cd website && yarn start"
+    "website:start": "cd website && yarn start",
+    "build:vscode": "cd extension && npm run vscode:prepublish"
   },
   "keywords": [
     "cli",
