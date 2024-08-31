@@ -13,9 +13,10 @@
         "postinstall": "npm link"
     },
     "dependencies": {
+        "boxen": "^5.1.2",
         "chalk": "^4.1.2",
+        "chalk-animation": "^1.6.0",
         "clixor": "file:",
-        "Clixor": "file:",
         "commander": "^8.3.0",
         "figlet": "^1.5.2",
         "fs-extra": "^10.0.0",

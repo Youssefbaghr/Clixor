@@ -1,5 +1,4 @@
 import inquirer from 'inquirer';
-import ora from 'ora';
 import fs from 'fs-extra';
 import path from 'path';
 import { ClixorConfig } from '../types';
@@ -11,9 +10,11 @@ import { loadConfig, saveConfig } from '../utils/config';
 import { logger } from '../utils/logger';
 import { nodeTemplate } from '../config/constants';
 import chalk from 'chalk';
+import ora from 'ora';
 
 export async function initCommand(options: Partial<ClixorConfig>) {
     const spinner = ora('Initializing Clixor project...').start();
+
     try {
         const config = await getFullConfig(options);
 
@@ -51,6 +52,7 @@ export async function initCommand(options: Partial<ClixorConfig>) {
         }
 
         spinner.text = chalk.cyan('Cloning repositories...');
+
         if (
             config.template === 'React' ||
             (config.template === 'Next-js' &&

@@ -1,39 +1,147 @@
+<div align="center">
 
-# Clixor
+# 🚀 Clixor
 
-Clixor is a modern CLI tool designed to simplify the process of initializing and managing development projects. With Clixor, you can quickly set up projects using predefined templates, manage configurations, and streamline your workflow.
+<img src="https://path-to-your-logo.png" alt="Clixor Logo" width="200"/>
 
-## Features
+[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/Youssefbaghr/Clixor)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
--  Project Initialization: Effortlessly create new projects with predefined templates.
-- Customizable Templates: Add, remove, or manage your own project templates.
-- Interactive Setup: Guided prompts to help you configure your project.
-- Support for Popular Package Managers: Choose between npm, Yarn, or Bun.
-- Optional Features: Easily include tools like ESLint, Prettier, Jest, Docker, and more.
+Streamline your project setup with Clixor - the modern CLI for effortless development initialization.
 
-## Installation
+[Installation](#installation) • [Usage](#usage) • [Features](#features) • [Contributing](#contributing) • [Support](#support)
 
-```bash
-  git clone https://github.com/Youssefbaghr/Clixor.git
-  cd Clixor
-```
+</div>
 
-Using npm
+---
 
-```bash
-  npm i
-```
+## 🌟 Features
 
-Using Yarn
-```bash
-  yarn 
-```
- 
-## Usage/Examples
+-   🏗️ **Project Initialization**: Quickly bootstrap projects using predefined or custom templates
+-   🎨 **Customizable Templates**: Easily manage and use your own project templates
+-   🧭 **Interactive Setup**: User-friendly prompts guide you through project configuration
+-   📦 **Multiple Package Managers**: Seamless support for npm, Yarn, and Bun
+-   🛠️ **Optional Tooling**: Integrate popular tools like ESLint, Prettier, Jest, and Docker with ease
+-   ⚙️ **Flexible Configuration**: Persist and manage your preferences for future use
 
-Once installed, you can start using Clixor to initialize your projects.
+## 🚀 Quick Start
 
 ```bash
- yarn/bun/npm start
+npx clixor init my-awesome-project
 ```
 
+This command initializes a new project named "my-awesome-project" using Clixor's interactive setup.
+
+## 📦 Installation
+
+### Prerequisites
+
+-   Node.js (v14 or later)
+-   Git
+
+### Steps
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/Youssefbaghr/Clixor.git
+    cd Clixor
+    ```
+
+2. **Install dependencies:**
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    bun install
+    ```
+
+3. **Link the CLI globally:**
+
+    ```bash
+    npm link
+    ```
+
+## 🖥️ Usage
+
+### Initialize a New Project
+
+```bash
+clixor init
+```
+
+Follow the interactive prompts to configure your project.
+
+### Manage Configuration
+
+```bash
+clixor config --list
+clixor config --set templateDir=/path/to/templates
+clixor config --reset
+```
+
+### Manage Templates
+
+```bash
+
+clixor template --list
+clixor template --add react-ts https://github.com/example/react-ts-template.git
+clixor template --remove react-ts
+
+```
+
+## 🛠️ Configuration
+
+Clixor uses a JSON configuration file stored at `~/.Clixor-config.json`. You can edit this file directly or use the `clixor config` command.
+
+Example configuration:
+
+```json
+{
+    "defaultTemplate": "react",
+    "packageManager": "npm",
+    "features": ["eslint", "prettier"],
+    "customTemplates": {
+        "react-ts": "https://github.com/example/react-ts-template.git"
+    }
+}
+```
+
+## 🧩 Extending Clixor
+
+### Creating Custom Templates
+
+1. Create a Git repository with your project structure
+2. Add a `clixor.json` file to specify template options:
+    ```json
+    {
+        "variables": ["projectName", "author"],
+        "scripts": {
+            "post-init": "npm run setup"
+        }
+    }
+    ```
+3. Add the template using `clixor template --add`
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on how to get started.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgements
+
+-   [Commander.js](https://github.com/tj/commander.js/) - CLI framework
+-   [Inquirer.js](https://github.com/SBoudrias/Inquirer.js/) - Interactive prompts
+-   [Chalk](https://github.com/chalk/chalk) - Terminal styling
+
+---
+
+<div align="center">
+Made with ❤️ by the Clixor Team
+</div>
