@@ -44,6 +44,19 @@ This command initializes a new project named "my-awesome-project" using Clixor's
 
 ### Steps
 
+
+To install Clixor globally, run:
+   ```bash
+  npm install -g clixor
+   ```
+
+Now you can use Clixor from anywhere in your terminal:
+   ```bash
+   clixor init my-new-project
+```
+
+By following these steps, users will be able to install and use Clixor globally via npm, which will pull the package from your GitHub repository. The CI/CD pipeline will ensure that new versions are automatically published to npm when you push changes or create new releases on GitHub.
+
 1. **Clone the repository:**
 
    ```bash
