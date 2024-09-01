@@ -1,27 +1,27 @@
 import React from 'react';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 
-import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-
-export function FeatureCard({
-  title,
-  description,
-  icon,
-}: {
+interface FeatureCardProps {
   title: string;
   description: string;
   icon: React.ReactNode;
-}) {
-  return (
-    <Card className="border-0 bg-white/10 dark:bg-white/5 backdrop-blur-lg hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300">
-      <CardHeader>
-        <div className="flex items-center space-x-2">
-          {icon}
-          <CardTitle className="text-lg sm:text-xl">{title}</CardTitle>
-        </div>
-        <CardDescription className="text-gray-700 dark:text-gray-300">
-          {description}
-        </CardDescription>
-      </CardHeader>
-    </Card>
-  );
 }
+
+export const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, icon }) => (
+  <Card className="bg-gradient-to-br from-purple-100 to-indigo-100 dark:from-purple-900/20 dark:to-indigo-900/20 border-0">
+    <CardHeader>
+      <CardTitle className="flex items-center">
+        {icon}
+        {title}
+      </CardTitle>
+      <CardDescription>{description}</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-300">
+        <li>Interactive project setup wizards</li>
+        <li>Custom command aliases for frequent tasks</li>
+        <li>Real-time validation and error handling</li>
+      </ul>
+    </CardContent>
+  </Card>
+);
