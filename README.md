@@ -2,7 +2,7 @@
 
 # 🚀 Clixor
 
-<img src="/assests/Logo.jpeg" alt="Clixor Logo" width="200"/>
+<img src="/assests/Logo.jpeg" alt="Clixor Logo" width="400"/>
 
 [![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/Youssefbaghr/Clixor)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
