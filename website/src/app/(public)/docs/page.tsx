@@ -7,6 +7,9 @@ export default function Docs() {
           Welcome to the Clixor documentation. Use the sidebar to navigate through different
           sections.
         </p>
+        <p>
+          Still on working.
+        </p>
       </main>
     </div>
   );
